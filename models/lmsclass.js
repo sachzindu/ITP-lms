@@ -26,7 +26,12 @@ const classSchema = new Schema({
     },
     alyear:{
         type:String,
-        required:[true, "Teacher is required" ],
+        required:[true, "Al year is required" ],
+    },
+
+    alstream:{
+        type:String,required:true
+
     },
     thumbnail:{
         public_id:{

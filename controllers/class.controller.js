@@ -15,7 +15,7 @@ export const getAllCourse = asyncHandler(async (req, res, next)=>{
         res.status(200).json({
             success:true,
             message:'All classes',
-            courses,
+            data:courses
         })
         
     } catch (error) {
@@ -59,7 +59,7 @@ export const getLecturesByCourseId = asyncHandler(async (req, res, next)=>{
  * Creates a new course and optionally uploads a thumbnail image.
  */
 export const createCourse = asyncHandler(async (req, res, next)=>{
-    const {title, description , teacher, createdBy,alyear}= req.body;
+    const {title, description , teacher, createdBy,alyear,alstream}= req.body;
     if(!title||! description ||! teacher||!createdBy || !alyear){
         return next(
             new AppError('Alll fields are required ', 400)
@@ -71,6 +71,7 @@ export const createCourse = asyncHandler(async (req, res, next)=>{
         description,
         teacher,
         alyear,
+        alstream,
         createdBy,
         thumbnail:{
             public_id:'Dummy',
