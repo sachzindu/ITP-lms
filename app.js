@@ -5,7 +5,7 @@ import express from 'express';
 import morgan from 'morgan';
 
 import errorMiddlware from './middlewares/error.middleware.js';
-import courseRoutes from './routes/course.Routes.js'
+import assignmentRoutes from './routes/assignment.Routes.js';
 
 
 
@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
     cors({
-        origin: 'https://learning-management-system-roan.vercel.app',
+        origin: 'http://localhost:5173',
         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
         preflightContinue: false,
         optionsSuccessStatus: 204,
@@ -37,7 +37,7 @@ app.use('/ping',function(_req,res){
 })
 
 
-app.use('/api/v1/course', courseRoutes)
+app.use('/api/v1/assignments', assignmentRoutes);
 
 
 app.all('*',(_req,res)=>{
