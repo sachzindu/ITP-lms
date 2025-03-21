@@ -1,0 +1,46 @@
+#navigation-container {
+  width: 60px; /* Default collapsed width */
+  height: 100vh;
+  background-color: #eab676; /* Applied requested color */
+  transition: width 0.3s ease-in-out;
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  overflow-x: hidden;
+}
+
+#navigation-container:hover {
+  width: 200px; /* Expand on hover */
+}
+
+#navigation-container a {
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  margin-bottom: 15px;
+  transition: all 0.3s ease-in-out;
+}
+
+#navigation-container a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+}
+
+.nav-item-name {
+  display: none;
+}
+
+#navigation-container:hover .nav-item-name {
+  display: inline;
+  margin-left: 10px;
+}
+
+svg {
+  fill: white;
+}
