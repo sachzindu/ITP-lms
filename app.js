@@ -6,6 +6,11 @@ import morgan from 'morgan';
 
 import errorMiddlware from './middlewares/error.middleware.js';
 import courseRoutes from './routes/course.Routes.js'
+import ticketRoutes from './routes/ticketRoutes.js'
+import lectureRoutes from './routes/lecture.Routes.js'
+import assignmentRoutes from './routes/assignment.Routes.js'
+import userRoutes from './routes/userRoutes.js'
+
 
 
 
@@ -38,6 +43,11 @@ app.use('/ping',function(_req,res){
 
 
 app.use('/api/v1/course', courseRoutes)
+app.use('api/v1/ticket', ticketRoutes);
+app.use('/api/v1/lecs', lectureRoutes)
+app.use('/api/v1/assignments', assignmentRoutes)
+app.use('/api/users', userRoutes);
+
 
 
 app.all('*',(_req,res)=>{

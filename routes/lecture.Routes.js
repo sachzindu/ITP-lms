@@ -1,9 +1,8 @@
 import {Router} from 'express'
 
-import { getAllCourse, createCourse, updateCourse, removeCourse } from '../controllers/class.controller.js';
+import { getAlllectures, getLecturesById, createLecture, updateLecture,removeLec } from '../controllers/lecture.controller.js';
 
 import upload from '../middlewares/multer.middleware.js';
-
 
 const router = Router();
 /**
@@ -13,12 +12,12 @@ const router = Router();
  */
 router.route('/')
     .get( 
-        getAllCourse
+        getAlllectures
     )
     .post(
             
-            upload.single('thumbnail'), 
-           createCourse
+            upload.fields([{name:"lecFile",maxCount:1},{name:"lecVideo",maxCount:1}]) ,
+           createLecture
         );
 /**
  * @route GET, PUT, DELETE /courses/:id
@@ -28,14 +27,16 @@ router.route('/')
 router.route('/:id')
  
     .put(
-        upload.single('thumbnail'),
+        upload.single() ,
        
-        updateCourse
+        updateLecture
     )
     .delete(
         
-        removeCourse
-    );
+        removeLec
+    ).get(
+        getLecturesById
+    )
 
 
 
