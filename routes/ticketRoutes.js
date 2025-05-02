@@ -1,11 +1,13 @@
 import express from "express";
 import { Ticket } from "../models/ticketModel.js";
 import { upload } from "../middlewares/requirePhoto.js";
+import cloudinary from 'cloudinary'
+
 
 const router = express.Router();
 
 // Route for Save a new Book
-router.post("/", upload.single("file"), async (request, response) => {
+router.post("/",upload.single("file"), async (request, response) => {
   try {
     if (
       !request.body.name ||
@@ -22,6 +24,18 @@ router.post("/", upload.single("file"), async (request, response) => {
           "Send all required fields: name,email,registrationNumber,eventType,contactNo,InquiryType,subject,massage,attachment",
       });
     }
+
+    let ticketPubId="";
+    let ticketPubUrl="";
+
+    if(request.file){
+
+      const result = await cloudinary.uploader.upload(request.file.path,{folder:"ticket"});
+      ticketPubId=result.public_id;
+      ticketPubUrl=result.secure_url;
+
+
+    }
     const newBook = {
       name: request.body.name,
       email: request.body.email,
@@ -31,8 +45,10 @@ router.post("/", upload.single("file"), async (request, response) => {
       category: request.body.category,
       subject: request.body.subject,
       message: request.body.message,
-      attachment: request.body.attachment,
-      photo: request.file.filename,
+      photo:{
+        secure_url:ticketPubUrl,
+        public_id:ticketPubId
+      }
     };
 
     const book = await Ticket.create(newBook);
@@ -48,6 +64,7 @@ router.post("/", upload.single("file"), async (request, response) => {
 router.get("/", async (request, response) => {
   try {
     const books = await Ticket.find({});
+    console.log(books);
 
     return response.status(200).json({
       count: books.length,
@@ -103,7 +120,20 @@ router.put("/:id", upload.single("file"), async (request, response) => {
       subject,
       message,
     } = request.body;
-    const photo = request.file.filename;
+
+    let ticketPubId="";
+    let ticketPubUrl="";
+
+    if(request.file){
+
+      const result = await cloudinary.uploader.upload(request.file.path,{folder:"ticket"});
+      ticketPubId=result.public_id;
+      ticketPubUrl=result.secure_url;
+
+
+    }
+
+ const photo = {public_id:ticketPubId,secure_url:ticketPubUrl};
 
     const result = await Ticket.findByIdAndUpdate(id, {
       name,

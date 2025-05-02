@@ -22,7 +22,7 @@ const userSchema = mongoose.Schema({
     },
     enrolledClasses: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Classes"
+        ref: "Lmsclass"
     }],
     role: {
         type: String,

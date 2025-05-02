@@ -8,7 +8,10 @@ import {
     updateCurrentUserProfile,
     deleteUserById,
     getUserById,
-    updateUserById
+    updateUserById,
+    getTeacherNameId,
+    addStudentToClass,
+    getEnrolledClassesByUserId
  } from "../controllers/userController.js";
 import { authenticate, authorizeAdmin} from "../middlewares/authMiddleware.js"
 const router = express.Router();
@@ -26,9 +29,19 @@ router
 .get(authenticate, getCurrentUserProfile)
 .put(authenticate, updateCurrentUserProfile);
 
+router.route("/teacheridname").get(getTeacherNameId);
+router.route("/addstudenttoclass").put(addStudentToClass);
+
+
+router.route("/getenrolledclassesbyuserid/:id").get(getEnrolledClassesByUserId)
+
 //adminn routes
 router.route("/:id").delete(authenticate, authorizeAdmin, deleteUserById)
-.get(authenticate, authorizeAdmin, getUserById)
+.get(authenticate, getUserById)
 .put(authenticate, authorizeAdmin, updateUserById);
+;
+
+//Instructor
+
 
 export default router;

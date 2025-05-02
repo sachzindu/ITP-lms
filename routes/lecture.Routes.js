@@ -1,6 +1,6 @@
 import {Router} from 'express'
 
-import { getAlllectures, getLecturesById, createLecture, updateLecture,removeLec } from '../controllers/lecture.controller.js';
+import { getAlllectures, getLecturesById, createLecture, updateLecture,removeLec, getLecsByClass } from '../controllers/lecture.controller.js';
 
 import upload from '../middlewares/multer.middleware.js';
 
@@ -24,6 +24,8 @@ router.route('/')
  * @description Get, update, or remove a course by ID
  * @access Admin only
  */
+
+router.route('/getlecbyclass').post(getLecsByClass);
 router.route('/:id')
  
     .put(

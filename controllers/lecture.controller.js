@@ -20,7 +20,7 @@ export const getAlllectures = asyncHandler(async (req, res, next)=>{
         
     } catch (error) {
         return next(
-            new AppError(e.message,500)
+            new AppError(error.message,500)
         )
     }
       
@@ -54,13 +54,15 @@ export const getLecturesById = asyncHandler(async (req, res, next)=>{
         )
     }
 });
+
+
 /**
  * @CREATE_LECTURE
  * Creates a new lecture and optionally uploads a thumbnail image.
  */
 export const createLecture = asyncHandler(async (req, res, next) => {
-    const { title, description, alclass, createdBy,month,week } = req.body;
-    if (!title || !description || !alclass || !createdBy ||!week ||!month) {
+    const { title, description, alclass, createdBy,month,week ,courseOfVideo} = req.body;
+    if (!title || !description || !alclass || !createdBy ||!week ||!month || !courseOfVideo) {
         return next(
             new AppError('All fields are required ', 400)
         );
@@ -73,6 +75,7 @@ export const createLecture = asyncHandler(async (req, res, next) => {
         createdBy,
         week,
         month,
+        courseOfVideo,
         lecDocument: {
             public_id: 'Dummy',
             secure_url: 'Dummy'
@@ -205,6 +208,33 @@ export const removeLec = asyncHandler(async (req, res, next)=>{
         res.status(200).json({
             success:true,
             message:'Lec Removed sucesssfully ',
+        })
+        
+    } catch (error) {
+        return next (
+            new AppError(error.message, 500)
+        )
+    }
+});
+
+export const getLecsByClass = asyncHandler(async (req, res, next)=>{
+    try {
+        const {id }= req.body
+        const lec = await Lecture.find({ alclass: id })
+        .sort({ title: 1, description: 1 }) // Sort by month and week for better organization
+        .lean(); 
+        if(!lec){
+            return next (
+                new AppError("Lec with given id does not exist", 500)
+            ) 
+        }
+        
+    
+
+        res.status(200).json({
+            success:true,
+            message:'Lec Removed sucesssfully ',
+            lec
         })
         
     } catch (error) {

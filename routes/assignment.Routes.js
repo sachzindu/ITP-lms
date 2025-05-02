@@ -1,6 +1,6 @@
 import {Router} from 'express'
 
-import { getAllAssignments, getAssignmentById, createAssignment, updateAssignment,removeAssignment } from '../controllers/assignment.controller.js';
+import { getAllAssignments, getAssignmentById, createAssignment, updateAssignment,removeAssignment, getAssignmentsByClassId } from '../controllers/assignment.controller.js';
 
 import upload from '../middlewares/multer.middleware.js';
 
@@ -24,6 +24,7 @@ router.route('/')
  * @description Get, update, or remove a assignment by ID
  * 
  */
+router.route('/asbyclassid/:id').get(getAssignmentsByClassId);
 router.route('/:id')
  
     .put(

@@ -34,8 +34,15 @@ const ticketSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    photo: {
-      type: String,
+    photo:{
+      public_id:{
+        type:String,
+        required:true,
+    },
+    secure_url:{
+        type:String,
+        required:true,
+    }
     },
   },
   {
@@ -44,3 +51,4 @@ const ticketSchema = mongoose.Schema(
 );
 
 export const Ticket = mongoose.model("Ticket",ticketSchema);
+

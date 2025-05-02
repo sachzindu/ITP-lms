@@ -59,7 +59,13 @@ const lectureSchema = new Schema({
     createdBy:{
         type:String,
         required:true,
-    }
+    },
+
+    courseOfVideo:{
+        type:String,
+        required:true,
+    },
+
 
 },{
     timestamps:true

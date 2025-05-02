@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
     cors({
-        origin: 'http://localhost:5173',
+        origin: 'http://localhost:5174',
         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
         preflightContinue: false,
         optionsSuccessStatus: 204,
@@ -42,10 +42,10 @@ app.use('/ping',function(_req,res){
 })
 
 
-app.use('/api/v1/course', courseRoutes)
-app.use('api/v1/ticket', ticketRoutes);
-app.use('/api/v1/lecs', lectureRoutes)
-app.use('/api/v1/assignments', assignmentRoutes)
+app.use('/api/course', courseRoutes)
+app.use('/api/ticket', ticketRoutes);
+app.use('/api/lecs', lectureRoutes)
+app.use('/api/assignments', assignmentRoutes)
 app.use('/api/users', userRoutes);
 
 

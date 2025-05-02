@@ -2,6 +2,8 @@ import User from '../models/userModel.js'
 import asyncHandler from '../middlewares/asyncHandler.js'
 import bcrypt from "bcryptjs";
 import createToken from "../utils/createToken.js"
+import AppError from "../utils/error.util.js";
+import mongoose from 'mongoose';
 
 const createUser = asyncHandler(async (req, res) => {
     const { username, email,alStream,alYear, password} = req.body;
@@ -182,6 +184,68 @@ const updateUserById = asyncHandler(async (req,res) => {
     }
 });
 
+ const getTeacherNameId =asyncHandler(async (req, res, next)=>{
+    try {
+        const teachers = await User.find(
+            {role:"instructor"}
+          );
+        
+        res.status(200).json({
+            success:true,
+            message:'Teacher ids and names',
+            teachers,
+        })
+        
+    } catch (error) {
+        return next(
+            new AppError(error.message,500)
+        )
+    }
+
+   
+})
+
+const addStudentToClass = asyncHandler(async (req, res, next) => {
+    const { classId, userDetail } = req.body;
+  
+    if (!classId || !userDetail) {
+      return res.status(400).json({ message: "classId and userDetail are required" });
+    }
+  
+    try {
+      const updatedUser = await User.findByIdAndUpdate(
+        userDetail,
+        { $addToSet: { enrolledClasses: new mongoose.Types.ObjectId(classId) } }, // avoids duplicates
+        { new: true }
+      );
+  
+      if (!updatedUser) {
+        return res.status(404).json({ message: "User not found" });
+      }
+  
+      res.status(200).json({ message: "Class added to user", user: updatedUser });
+    } catch (error) {
+      next(error); // use next for asyncHandler to catch
+    }
+  });
+
+ 
+
+const getEnrolledClassesByUserId = asyncHandler(async (req, res) => {
+    const userId = req.params.id;
+
+    const user = await User.findById(userId).select('enrolledClasses');
+
+    if (!user) {
+        res.status(404);
+        throw new Error('User not found');
+    }
+
+    res.json(user.enrolledClasses);
+});
+
+  
+
 export { 
     createUser,
     loginUser,
@@ -192,5 +256,8 @@ export {
     deleteUserById,
     getUserById,
     updateUserById,
+    getTeacherNameId,
+    addStudentToClass,
+    getEnrolledClassesByUserId
 
      };

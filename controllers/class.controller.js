@@ -4,6 +4,9 @@ import fs from 'fs/promises'
 import asyncHandler from '../middlewares/asyncHAndler.middleware.js';
 import Lmsclass from "../models/lmsclass.js"
 import AppError from "../utils/error.util.js";
+import payment from "../payments/payments.js"
+
+import joi from 'joi';
 
 /**
  * @GET_ALL_COURSES
@@ -54,6 +57,28 @@ export const getLecturesByCourseId = asyncHandler(async (req, res, next)=>{
         )
     }
 });
+
+export const getClassNameId =asyncHandler(async (req, res, next)=>{
+    try {
+        const lec = await Lmsclass.find({}).select('_id title');
+        console.log(lec);
+        res.status(200).json({
+            success:true,
+            message:'class ids and names',
+            lec,
+        })
+        
+    } catch (error) {
+        return next(
+            new AppError(error.message,500)
+        )
+    }
+
+   
+})
+
+
+
 /**
  * @CREATE_COURSE
  * Creates a new course and optionally uploads a thumbnail image.
@@ -115,6 +140,13 @@ export const createCourse = asyncHandler(async (req, res, next)=>{
  * Updates an existing course by ID.
  */
 export const updateCourse = asyncHandler(async (req, res, next)=>{
+
+
+
+
+
+
+    
     try {
         const {id}= req.params;
 
@@ -173,3 +205,122 @@ export const removeCourse = asyncHandler(async (req, res, next)=>{
         )
     }
 });
+
+export const getClassesByTeacherId =asyncHandler(async (req, res, next)=>{
+    const {id}=req.params;
+    try {
+        const classes = await Lmsclass.find({ teacher: id });
+        console.log(classes);
+        res.status(200).json({
+            success:true,
+            message:'classes of teacher',
+            classes,
+        })
+        
+    } catch (error) {
+        return next(
+            new AppError(error.message,500)
+        )
+    }
+
+   
+})
+
+function validateCard(data) {
+    const cardSchema = joi.object({
+        number: joi.string().pattern(/^[0-9]{13,19}$/).required()
+            .messages({
+                'string.pattern.base': 'Card number must be between 13 and 19 digits'
+            }),
+        cvc: joi.string().pattern(/^[0-9]{3,4}$/).required()
+            .messages({
+                'string.pattern.base': 'CVC must be 3 or 4 digits'
+            }),
+        exp_month: joi.string().pattern(/^(0[1-9]|1[0-2])$/).required()
+            .messages({
+                'string.pattern.base': 'Expiration month must be between 01 and 12'
+            }),
+        exp_year: joi.string().pattern(/^[0-9]{2}$/).required()
+            .messages({
+                'string.pattern.base': 'Expiration year must be 2 digits'
+            }),
+        amount: joi.number().positive().required()
+            .messages({
+                'number.base': 'Amount must be a number',
+                'number.positive': 'Amount must be positive'
+            })
+    });
+    
+    return cardSchema.validate(data);
+}
+
+
+
+export const addStudent=asyncHandler(
+    async (req, res, next) => {
+        const { number, amount, cvc, exp_month, exp_year } = req.body;
+        const { error: validationError } = validateCard(req.body);
+        
+        try {
+            // Check for validation error
+            if (validationError) {
+                const error = new Error(validationError.details[0].message);
+                error.statusCode = 400;
+                throw error;
+            }
+    
+            const result = await payment(number, cvc, exp_month, exp_year, amount);
+            
+            // Check if payment was successful
+            if (!result) {
+                const error = new Error("Payment processing failed");
+                error.statusCode = 500;
+                throw error;
+            }
+            
+            console.log(result);
+            res.status(200).json({ message: "Success", paymentId: result.id });
+            
+        } catch (error) {
+            next(error);
+        }
+    }
+)
+
+export const getClassesByStream =asyncHandler(async (req, res, next)=>{
+    const stream=req.body;
+    console.log(stream);
+    try {
+        const classes = await Lmsclass.find(
+            {alstream:stream}
+          );
+        
+        res.status(200).json({
+            success:true,
+            message:'Classes by stream',
+            classes,
+        })
+        
+    } catch (error) {
+        return next(
+            new AppError(error.message,500)
+        )
+    }
+
+   
+})
+
+export const getClassesByIds = asyncHandler(async (req, res) => {
+    const classIds = req.body // expecting an array of IDs in the request body
+
+    if (!Array.isArray(classIds) || classIds.length == 0) {
+      
+        console.log("Classes can't be empty");
+        res.status(400);
+    }
+
+    const classes = await Lmsclass.find({ _id: { $in: classIds } });
+
+    res.json(classes);
+});
+

@@ -44,6 +44,7 @@ export const getAssignmentById = asyncHandler(async (req, res, next)=>{
         res.status(200).json({
             success:true,
             message:'assignments fetched sucesssfully ',
+            assi
             
         })
         
@@ -192,3 +193,24 @@ export const removeAssignment = asyncHandler(async (req, res, next)=>{
         )
     }
 });
+
+export const getAssignmentsByClassId =asyncHandler(async (req, res, next)=>{
+    const {id}=req.params;
+    try {
+        const assignments = await Lm.find({ alclass: id });
+        console.log(assignments);
+        res.status(200).json({
+            success:true,
+            message:'assignments of class',
+            assignments,
+        })
+        
+    } catch (error) {
+        return next(
+            new AppError(error.message,500)
+        )
+    }
+
+   
+})
+

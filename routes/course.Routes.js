@@ -1,8 +1,9 @@
 import {Router} from 'express'
 
-import { getAllCourse, createCourse, updateCourse, removeCourse } from '../controllers/class.controller.js';
+import { getAllCourse, createCourse, updateCourse, removeCourse ,getClassNameId, getClassesByTeacherId, getClassesByStream, getClassesByIds} from '../controllers/class.controller.js';
 
 import upload from '../middlewares/multer.middleware.js';
+import stripepayment from '../payments/stripepayment.js';
 
 
 const router = Router();
@@ -24,7 +25,15 @@ router.route('/')
  * @route GET, PUT, DELETE /courses/:id
  * @description Get, update, or remove a course by ID
  * @access Admin only
+ * 
  */
+
+router.route('/nameid').get(getClassNameId);
+router.route('/addstudent').post(stripepayment);
+router.route('/getclassesbyids').post(getClassesByIds);
+router.route('/getclassesofstream').get(getClassesByStream);
+
+router.route('/classesofteacher/:id').get(getClassesByTeacherId);
 router.route('/:id')
  
     .put(
@@ -36,6 +45,8 @@ router.route('/:id')
         
         removeCourse
     );
+
+
 
 
 
