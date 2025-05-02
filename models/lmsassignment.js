@@ -36,6 +36,7 @@ const AssignmentSchema = new Schema({
         required:[true, "class name is required" ],
     },
     lecDocument:{
+<<<<<<< HEAD
         public_id:{
             type:String,
             required:true,
@@ -48,15 +49,24 @@ const AssignmentSchema = new Schema({
     },
 
    /* lecVideo:{
+=======
+>>>>>>> 9411b37 (Added new feature to payment module)
         public_id:{
             type:String,
             required:true,
         },
+       
         secure_url:{
             type:String,
             required:true,
         }
+<<<<<<< HEAD
     },*/
+=======
+    },
+
+   
+>>>>>>> 9411b37 (Added new feature to payment module)
     
     createdBy:{
         type:String,
