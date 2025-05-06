@@ -1,15 +1,26 @@
 import multer from "multer";
+import path from "path";
 
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    return cb(
-      null,
-      "C:/Users/Kumalsha Samudi/Desktop/support ticket/frontend/public/images"
-    );
+  destination: (req, file, cb) => {
+    cb(null, "uploads/");
   },
-  filename: function (req, file, cb) {
-    return cb(null,` ${file.originalname}`);
-  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname));
+  }
 });
 
-export const upload = multer({ storage });
+export const upload = multer({
+  storage: storage,
+  limits: { fileSize: 5000000 }, // 5MB limit
+  fileFilter: (req, file, cb) => {
+    const fileTypes = /jpeg|jpg|png|gif/;
+    const mimeType = fileTypes.test(file.mimetype);
+    const extname = fileTypes.test(path.extname(file.originalname).toLowerCase());
+
+    if (mimeType && extname) {
+      return cb(null, true);
+    }
+    cb(new Error("Only support image files"));
+  }
+});
