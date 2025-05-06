@@ -3,6 +3,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import BackButton from "../components/BackButton";
 import Spinner from "../components/Spinner";
+import { Link } from "react-router-dom";
 
 const ShowTicket = () => {
   const [book, setBook] = useState({});
@@ -25,6 +26,12 @@ const ShowTicket = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 p-6">
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
       <div className="max-w-3xl mx-auto">
         <BackButton />
         
@@ -115,6 +122,29 @@ const ShowTicket = () => {
             <div className="mt-6 pt-6 border-t flex justify-between text-sm text-gray-500">
               <span>Created: {new Date(book.createdAt).toLocaleString()}</span>
               <span>Updated: {new Date(book.updatedAt).toLocaleString()}</span>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="mt-6 pt-6 border-t flex justify-between">
+              <Link
+                to={`/ticket/timeline/${book._id}`}
+                className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                <svg
+                  className="w-5 h-5 mr-2"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                  />
+                </svg>
+                View Timeline
+              </Link>
             </div>
           </div>
         )}

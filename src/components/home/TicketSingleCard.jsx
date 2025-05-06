@@ -13,16 +13,16 @@ const BookSingleCard = ({ book }) => {
   return (
     <div className='border-2 border-gray-500 rounded-lg px-4 py-2 m-4 relative hover:shadow-xl'>
       <img src={`../public/images/${book.photo}`} alt="" />
-      <h2 className='absolute top-1 right-2 px-4 py-1 bg-red-300 rounded-lg'>
+      <h2 className='absolute top-1 right-2 px-4 py-1 bg-blue-600 rounded-lg'>
         {book.name}
       </h2>
       <h4 className='my-2 text-gray-500'>{book.email}</h4>
       <div className='flex justify-start items-center gap-x-2'>
-        <PiBookOpenTextLight className='text-red-300 text-2xl' />
+        <PiBookOpenTextLight className='text-[#1e81b0] text-2xl' />
         <h2 className='my-1'>{book.registrationNumber}</h2>
       </div>
       <div className='flex justify-start items-center gap-x-2'>
-        <BiUserCircle className='text-red-300 text-2xl' />
+        <BiUserCircle className='text-[#1e81b0] text-2xl' />
         <h2 className='my-1'>{book.category}</h2>
       </div>
       <div className='flex justify-between items-center gap-x-2 mt-4 p-4'>

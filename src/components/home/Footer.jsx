@@ -58,6 +58,7 @@ const Footer = () => {
                     <input className='w-full p-2 mr-4 rounded-md mb-4' type="email" placeholder='Enter message..'/>
                     <button className='p-2 mb-4 '>Send!</button>
                 </form>
+                
             </div>
         </div>
 

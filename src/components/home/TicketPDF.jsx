@@ -55,12 +55,12 @@ const TicketPDF = ({ book }) => (
   <Document>
     <Page size="A4" style={styles.page}>
       {/* Header */}
-      <Text style={styles.header}>Event Ticket Details</Text>
+      <Text style={styles.header}>Ticket Details</Text>
       
       {/* Ticket Information */}
       <View style={styles.section}>
         <Text style={styles.label}>Name:</Text>
-        <Text style={styles.text}>{book.name}</Text>
+        <Text style={styles.text}></Text>
         <Text style={styles.label}>Email:</Text>
         <Text style={styles.text}>{book.email}</Text>
         <Text style={styles.label}>Grade:</Text>
@@ -75,8 +75,7 @@ const TicketPDF = ({ book }) => (
         <Text style={styles.text}>{book.message}</Text>
       </View>
       
-      {/* Footer */}
-      <Text style={styles.footer}>Thank you for your booking. We look forward to seeing you!</Text>
+      
     </Page>
   </Document>
 );

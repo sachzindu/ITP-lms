@@ -7,8 +7,6 @@ import { AiOutlineEdit } from "react-icons/ai";
 import { BsInfoCircle } from "react-icons/bs";
 import { MdOutlineDelete } from "react-icons/md";
 
-
-
 const Home = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -37,7 +35,19 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-     
+    <br></br>
+    <br></br>
+    <br></br>
+    <br></br>
+      {/* For Admin Button Below Navbar */}
+      <div className="container mx-auto px-4 py-4 flex justify-end">
+        <Link to="/ticket/admin">
+          <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+            For Admin
+          </button>
+        </Link>
+      </div>
+
       {/* Hero Section */}
       <section className="bg-[url(/src/assets/blurimage.avif)] bg-cover bg-center h-64 w-full bg-gradient-to- bg-[#1e81b0] text-white py-20">
         <div className="container mx-auto px-4 text-center">
@@ -46,13 +56,20 @@ const Home = () => {
             We're here to make your learning journey amazing! Get help with any issues,
             explore resources, and reach out to our friendly support team.
           </p>
-          <Link to="/ticket/create">
+          <Link to="/ticket/chatbox">
             <button className="bg-white text-blue-600 px-6 py-3 rounded-md font-semibold hover:bg-blue-50 transition-colors">
               Create New Ticket
             </button>
           </Link>
         </div>
       </section>
+      <div className="absolute top-4 right-4">
+        <Link to="/ticket/admin">
+          <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+            For Admin
+          </button>
+        </Link>
+      </div>
 
       {/* Category Cards */}
       <section className="container mx-auto px-4 py-12">
@@ -167,9 +184,6 @@ const Home = () => {
           )}
         </div>
       </section>
-
-      
-     
     </div>
   );
 };

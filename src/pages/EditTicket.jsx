@@ -40,19 +40,28 @@ const EditTicket = () => {
         console.log(error);
       });
   }, [id])
-  
   const handleEditBook = () => {
-    /*const data = {
-      name,
-      email,
-      registrationNumber,
-      grade,
-      contactNumber,
-      category,
-      subject,
-      message,
-      attachment,
-    };*/
+    // Name validation
+    if (!/^[A-Za-z\s]+$/.test(name)) {
+      enqueueSnackbar("Please enter letters only for Name", { variant: "error" });
+      return;
+    }
+    // Email validation
+    if (!/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(email)) {
+      enqueueSnackbar("Please enter a valid email address", { variant: "error" });
+      return;
+    }
+    // Registration number validation
+    if (!/^[a-zA-Z0-9]+$/.test(registrationNumber)) {
+      enqueueSnackbar("Please enter alphanumeric characters only for Registration Number", { variant: "error" });
+      return;
+    }
+    // Phone number validation
+    if (!/^\d{10}$/.test(contactNumber)) {
+      enqueueSnackbar("Please enter a 10-digit phone number", { variant: "error" });
+      return;
+    }
+ 
     const data = new FormData();
     data.append("name", name);
     data.append("email", email);
@@ -81,6 +90,12 @@ const EditTicket = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 p-6">
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
       <div className="max-w-2xl mx-auto">
         <BackButton />
         
@@ -186,6 +201,7 @@ const EditTicket = () => {
 // Reusable Input Field Component
 const InputField = ({ label, value, onChange, type }) => (
   <div>
+    
     <label className="block text-sm font-medium text-gray-700 mb-1">
       {label}
     </label>

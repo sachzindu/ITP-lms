@@ -3,16 +3,38 @@ import { AiOutlineEdit } from "react-icons/ai";
 import { BsInfoCircle } from "react-icons/bs";
 import { MdOutlineDelete } from "react-icons/md";
 import { useState } from "react";
+import axios from "axios";
+import { useSnackbar } from 'notistack';
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import TicketPDF from "./TicketPDF";
 
 const TicketTable = ({ books }) => {
   const [query, setQuery] = useState("");
+  const { enqueueSnackbar } = useSnackbar();
   const keys = ["name", "grade", "subject", "category"];
+
+  const statusOptions = [
+    { value: 'submitted', label: 'Submitted', color: 'bg-yellow-100 text-yellow-800' },
+    { value: 'assigned', label: 'Assigned', color: 'bg-blue-100 text-blue-800' },
+    { value: 'in_progress', label: 'In Progress', color: 'bg-purple-100 text-purple-800' },
+    { value: 'resolved', label: 'Resolved', color: 'bg-green-100 text-green-800' }
+  ];
+
+  const handleStatusUpdate = async (ticketId, newStatus) => {
+    try {
+      await axios.put(`http://localhost:5000/ticket/${ticketId}/status`, {
+        status: newStatus
+      });
+      enqueueSnackbar('Status updated successfully', { variant: 'success' });
+    } catch (error) {
+      console.error('Error updating status:', error);
+      enqueueSnackbar('Failed to update status', { variant: 'error' });
+    }
+  };
 
   const search = (data) => {
     return data.filter((item) =>
-      keys.some((key) => item[key].toLowerCase().includes(query.toLowerCase()))
+      keys.some((key) => item[key]?.toLowerCase().includes(query.toLowerCase()))
     );
   };
 
@@ -20,7 +42,7 @@ const TicketTable = ({ books }) => {
     <div className="container mx-auto px-4 py-8">
       {/* Header Section */}
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-800">IgniteLearn Support Tickets</h2>
+       
         <div className="relative w-72">
           <input
             type="text"
@@ -59,6 +81,7 @@ const TicketTable = ({ books }) => {
                 <th className="py-3 px-4 text-left">Contact</th>
                 <th className="py-3 px-4 text-left">Category</th>
                 <th className="py-3 px-4 text-left">Subject</th>
+                <th className="py-3 px-4 text-left">Status</th>
                 <th className="py-3 px-4 text-left">Uploaded Photo</th>
                 <th className="py-3 px-4 text-left">Actions</th>
               </tr>
@@ -92,16 +115,29 @@ const TicketTable = ({ books }) => {
                   </td>
                   <td className="py-4 px-4 text-gray-600">{book.subject}</td>
                   <td className="py-4 px-4">
-                        {book.photo ? (
-                          <img
-                            src={`/images/${book.photo}`}
-                            alt="Ticket file"
-                            className="w-16 h-16 object-cover rounded-md border border-gray-200"
-                          />
-                        ) : (
-                          <span className="text-gray-500">No file</span>
-                        )}
-                      </td>
+                    <select
+                      value={book.status || 'submitted'}
+                      onChange={(e) => handleStatusUpdate(book._id, e.target.value)}
+                      className="px-3 py-1 rounded-lg text-sm font-medium border-2 border-gray-200 focus:border-blue-500 focus:ring-0"
+                    >
+                      {statusOptions.map(option => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
+                  </td>
+                  <td className="py-4 px-4">
+                    {book.photo ? (
+                      <img
+                        src={`/images/${book.photo}`}
+                        alt="Ticket file"
+                        className="w-16 h-16 object-cover rounded-md border border-gray-200"
+                      />
+                    ) : (
+                      <span className="text-gray-500">No file</span>
+                    )}
+                  </td>
                   <td className="py-4 px-4">
                     <div className="flex items-center gap-3">
                       <Link to={`/ticket/details/${book._id}`} className="group">

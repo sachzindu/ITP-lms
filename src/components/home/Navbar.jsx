@@ -1,41 +1,54 @@
-import React, {useState} from "react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import React from 'react';
 
-function Navbar(){
-
-    const [nav,setNav]=useState(false);
-    
-
-    return (<>
-    <div className="w-screen h-[80px] z-10 bg-[#eeeee4] fixed drop-shadow-lg">
-        <div className="px-2 flex justify-between items-center w-full h-full">
-            <div className="flex items-center">
-                <h1 className="text-3xl font-bold mr-4 sm:text-4xl">IgniteLearn</h1>
-                <ul className="hidden md:flex">
-                    <li>Home</li>
-                    <li>Classes</li>
-                    <li>Support</li>
-                    <li>About us</li>
-                </ul>
-            </div>
-            <div className="hidden md:flex p-4">
-                <button className="border-none bg-transparent text-black mr-4 ">Sign in</button>
-                <button className="px-8 py-3"> Sign up</button>
-            </div>
-
-            <div className="md:hidden  ">
-            <Bars3Icon className="w-5"></Bars3Icon>
-
-            </div>
-
+const Navbar = () => {
+  return (
+    <nav className="w-full bg-[#eeeee4] shadow-md fixed top-0 left-0 z-50">
+      <div className="max-w-[1240px] mx-auto px-4 py-4 flex justify-between items-center">
+        {/* Left Section: Logo and Links */}
+        <div className="flex items-center space-x-6">
+          <h1 className="text-2xl font-bold text-gray-800">IgniteLearn</h1>
+          <ul className="flex space-x-4">
+            <li>
+              <a href="/Home/All" className="text-gray-600 hover:text-gray-800 transition-colors">
+                Home
+              </a>
+            </li>
+            <li>
+              <a href="#" className="text-gray-600 hover:text-gray-800 transition-colors">
+                Classes
+              </a>
+            </li>
+            <li>
+              <a href="/" className="text-gray-600 hover:text-gray-800 transition-colors">
+                Support
+              </a>
+            </li>
+            <li>
+              <a href="/Home/About" className="text-gray-600 hover:text-gray-800 transition-colors">
+                About us
+              </a>
+            </li>
+          </ul>
         </div>
-        
 
-      
-    </div>
+        {/* Right Section: Sign in/Sign up */}
+        <div className="flex space-x-3">
+          <a
+            href="#"
+            className="text-blue-600 hover:text-blue-800 transition-colors"
+          >
+            Sign in
+          </a>
+          <a
+            href="#"
+            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+          >
+            Sign up
+          </a>
+        </div>
+      </div>
+    </nav>
+  );
+};
 
-    </>)
-
-}
-
-export default Navbar
+export default Navbar;
