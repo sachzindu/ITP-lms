@@ -22,6 +22,7 @@ app.get("/", (req, res) =>
 // --- Mount ticket routes ---
 app.use("/ticket", ticketRoutes);
 
+
 // --- 404 for unmatched ---
 app.use((req, res) =>
   res.status(404).json({
