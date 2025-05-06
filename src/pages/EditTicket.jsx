@@ -62,6 +62,8 @@ const EditTicket = () => {
       return;
     }
  
+
+    
     const data = new FormData();
     data.append("name", name);
     data.append("email", email);
