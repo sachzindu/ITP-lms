@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
 
 const CreateTicket = () => {
+  // Form field state
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [registrationNumber, setRegistrationNumber] = useState("");
@@ -16,10 +17,12 @@ const CreateTicket = () => {
   const [message, setMassage] = useState("");
   const [file, setFile] = useState({});
 
+  // UI state
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
 
+  // Form submission handler
   const handleSaveBook = () => {
     // Name validation
     if (!/^[A-Za-z]+$/.test(name)) {
@@ -78,6 +81,8 @@ const CreateTicket = () => {
     data.append("file", file);
     console.log(file);
     setLoading(true);
+
+    // Send POST request to backend
     axios
       .post("http://localhost:5000/ticket", data)
       .then(() => {
