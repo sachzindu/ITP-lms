@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+    @apply bg-[url('D:\Downloads3\UserManagement\UserManagement\frontend\src\assets\bc_img.jpg')] bg-cover bg-center h-64
+}
+
