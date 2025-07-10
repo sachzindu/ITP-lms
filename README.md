@@ -25,3 +25,6 @@ npm run dev
 cd frontend
 npm install
 npm run dev
+
+# Known issues
+If there is a dependency conflict when installing backend use npm install --force
