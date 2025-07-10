@@ -7,7 +7,7 @@ This is a learning management system we developed for our university's informati
 
 - Frontend: React / Vite/ TailwindCSS
 - Backend: Node.js / Express
-- Database: MongoDB (if applicable)
+- Database: MongoDB 
 
 
 ## 📦 Installation
