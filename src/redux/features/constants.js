@@ -1,4 +1,4 @@
-export const BASE_URL = "https://itp-lms.onrender.com";
+export const BASE_URL = "https://itp-lms-backend.onrender.com";
 export const USERS_URL = "/api/users";
 export const CLASSES_URL = "/api/course";
 export const LECS_URL="/api/lecs"
