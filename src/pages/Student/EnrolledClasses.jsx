@@ -6,42 +6,7 @@ import { useLazyGetClassesByClassIdQuery } from '../../redux/api/classesApiSlice
 
 // Sample data - replace with your actual data
 const initialClasses = [
-  {
-    id: 1,
-    title: "Advanced JavaScript",
-    image: "/api/placeholder/640/360",
-    instructor: "Dr. Sarah Chen"
-  },
-  {
-    id: 2,
-    title: "UX Design Principles",
-    image: "/api/placeholder/640/360",
-    instructor: "Prof. Michael Reynolds"
-  },
-  {
-    id: 3,
-    title: "Data Visualization",
-    image: "/api/placeholder/640/360",
-    instructor: "Lisa Wong, PhD"
-  },
-  {
-    id: 4,
-    title: "Machine Learning Fundamentals",
-    image: "/api/placeholder/640/360",
-    instructor: "Dr. James Blackwell"
-  },
-  {
-    id: 5,
-    title: "Modern Web Architecture",
-    image: "/api/placeholder/640/360",
-    instructor: "Alex Johnson"
-  },
-  {
-    id: 6,
-    title: "Cloud Computing",
-    image: "/api/placeholder/640/360",
-    instructor: "Prof. Elena Martinez"
-  }
+  
 ];
 
 export default function EnrolledClasses() {
