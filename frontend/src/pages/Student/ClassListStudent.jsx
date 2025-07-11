@@ -4,34 +4,7 @@ import { BookOpen, GraduationCap, User, ChevronRight } from 'lucide-react';
 const StudentDashboard = () => {
   // Mock data for enrolled courses
   const [courses] = useState([
-    {
-      id: 1,
-      title: "Introduction to Computer Science",
-      instructor: "Dr. Sarah Johnson",
-      progress: 65,
-      imageUrl: "/api/placeholder/800/400"
-    },
-    {
-      id: 2,
-      title: "Advanced Mathematics",
-      instructor: "Prof. Michael Chen",
-      progress: 42,
-      imageUrl: "/api/placeholder/800/400"
-    },
-    {
-      id: 3,
-      title: "Digital Marketing Fundamentals",
-      instructor: "Emma Rodriguez",
-      progress: 78,
-      imageUrl: "/api/placeholder/800/400"
-    },
-    {
-      id: 4,
-      title: "Web Development Bootcamp",
-      instructor: "Alex Thompson",
-      progress: 31,
-      imageUrl: "/api/placeholder/800/400"
-    }
+    
   ]);
 
   return (
