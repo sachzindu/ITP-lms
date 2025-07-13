@@ -39,34 +39,42 @@ const createUser = asyncHandler(async (req, res) => {
     
 });
 
-const loginUser = asyncHandler(async (req,res) => {
-    const {email, password} = req.body;
+const loginUser = asyncHandler(async (req, res) => {
+    const { email, password } = req.body;
 
-    const existingUser = await User.findOne({email})
-
-    if(existingUser) {
-        const isPasswordValid =await bcrypt.compare(password, existingUser.password)
-
-        if(isPasswordValid) {
-           createToken(res, existingUser._id) 
-           
-           res.status(201).send({
-            _id: existingUser._id,
-            username:existingUser.username,
-            email:existingUser.email,
-            role: existingUser.role,
-            profilePicture: existingUser.profilePicture,
-
-        });
+    // 1. Check if email and password are provided (basic validation)
+    if (!email || !password) {
+        res.status(400).json({ message: "Please enter all fields" });
         return;
-
-        }
-        else{
-            res.status(400).send({
-                message:"The credentials invalid"
-            })
     }
-};
+
+    const existingUser = await User.findOne({ email });
+
+    if (existingUser) {
+        const isPasswordValid = await bcrypt.compare(password, existingUser.password);
+
+        if (isPasswordValid) {
+            createToken(res, existingUser._id); // Assuming createToken handles token setting (e.g., in cookies)
+
+            res.status(200).json({ // Use 200 OK for successful login
+                _id: existingUser._id,
+                username: existingUser.username,
+                email: existingUser.email,
+                role: existingUser.role,
+                profilePicture: existingUser.profilePicture,
+            });
+            return; // Important: return after sending response
+        } else {
+            // Invalid password
+            res.status(401).json({ message: "Invalid email or password" });
+            return; // Important: return after sending response
+        }
+    } else {
+        // User not found
+        res.status(401).json({ message: "Invalid email or password" });
+        return; // Important: return after sending response
+    }
+});
 
 const logoutCurrentUser = asyncHandler(async (req, res) => {
     res.cookie('jwt', '', {
