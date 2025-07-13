@@ -61,6 +61,10 @@ const loginUser = asyncHandler(async (req,res) => {
         return;
 
         }
+        else{
+            res.status(400).send({
+                message:"The credentials invalid"
+            })
     }
 });
 
