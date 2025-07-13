@@ -57,7 +57,7 @@ const Navigation = () => {
             <div className="flex space-x-8">
               <h1 className="text-3xl font-bold mr-4 sm:text-4xl">IgniteLearn</h1>
               <ul className="flex space-x-6">
-                <li className="px-4 py-4"><Link to="/" className="flex items-center space-x-2 text-black hover:text-gray-200">
+                <li className="px-4 py-4"><Link to="/home" className="flex items-center space-x-2 text-black hover:text-gray-200">
                     <span>Home</span>
                 </Link></li>
                

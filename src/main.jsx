@@ -51,6 +51,7 @@ import Hero from './Home/Hero.jsx';
 import Navbar from './Home/Navbar.jsx';
 import Section2 from './Home/Section2.jsx';
 import TicketHome from './pages/Admin/TicketHome.jsx';
+import Homepage from './Home/Homepage.jsx'
 
 //admin
 import Allclasses from './pages/Admin/Allclasses.jsx'
@@ -83,6 +84,7 @@ const router = createBrowserRouter(
     <Route path='/about' element={<About/>}></Route>
     <Route path='/allInOne' element={<AllInOne/>}></Route>
     <Route path='/navbar' element={<Navbar/>}></Route>
+     <Route path='/home' element={<Homepage/>}></Route>
     <Route path='/section2' element={<Section2/>}></Route>
     <Route path='' element={<PrivateRoute/>}>
       <Route path='/profile' element={<Profile/>} />
