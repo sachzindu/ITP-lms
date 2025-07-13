@@ -29,7 +29,7 @@ const SupportAdmin = () => {
     setLoading(true);
     try {
       const response = await getTickets().unwrap();
-      setTickets(response.data.data);
+      setTickets(response.data);
     } catch (error) {
       console.error('Error fetching tickets:', error);
       enqueueSnackbar('Error fetching tickets', { variant: 'error' });
