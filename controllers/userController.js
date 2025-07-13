@@ -66,7 +66,7 @@ const loginUser = asyncHandler(async (req,res) => {
                 message:"The credentials invalid"
             })
     }
-});
+};
 
 const logoutCurrentUser = asyncHandler(async (req, res) => {
     res.cookie('jwt', '', {
